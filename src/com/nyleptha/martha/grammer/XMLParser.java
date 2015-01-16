@@ -14,13 +14,14 @@ import org.w3c.dom.NodeList;
 
 public class XMLParser {
 
-	File xmlFile = new File(
+	static File xmlFile = new File(
 			"/home/dilshan/office/Martha_Web_V1/src/rules.xml");
-	DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-	DocumentBuilder docBuilder;
-	String objPath = "/home/dilshan/office/Martha/src/main/resources/document.ser";
+	static DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+	static DocumentBuilder docBuilder;
+	static String objPath = "/home/dilshan/office/Martha/src/main/resources/document.ser";
 
-	public void createXML(String root) {
+	//create an xml file with root element and without attribute and value
+	public static void createXML(String root) {
 		try {
 			docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
@@ -31,8 +32,23 @@ public class XMLParser {
 			e.printStackTrace();
 		}
 	}
+	
+	//create an xml file with root element and with attribute and value
+	public static void createXML(String root,String attribute,String value) {
+		try {
+			docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.newDocument();
+			Element rootElement = doc.createElement(root);
+			rootElement.setAttribute(attribute, value);
+			doc.appendChild(rootElement);
+			TransformXML(doc);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-	public Document TransformXML(Document doc) {
+	//transform the xml file
+	public static Document TransformXML(Document doc) {
 		try {
 			TransformerFactory transformerFactory = TransformerFactory
 					.newInstance();
@@ -45,8 +61,9 @@ public class XMLParser {
 		}
 		return doc;
 	}
-
-	public void addChildElement(String parent, String child) {
+	
+   //add child elemnts without attributes
+	public static void addChildElement(String parent, String child) {
 		try {
 			docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse(xmlFile);
@@ -58,8 +75,54 @@ public class XMLParser {
 			e.printStackTrace();
 		}
 	}
+	
+	   //add child elemnts without attributes but with contents
+		public static void addChildElement(String parent, String child,String content) {
+			try {
+				docBuilder = docFactory.newDocumentBuilder();
+				Document doc = docBuilder.parse(xmlFile);
+				Node parentNode = doc.getElementsByTagName(parent).item(0);
+				Element childElement = doc.createElement(child);
+				parentNode.appendChild(childElement);
+				childElement.setTextContent(content);
+				TransformXML(doc);	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
+	//add child element with attributes without value
+	public static void addChildElement(String parent, String child,String attribute,String value) {
+		try {
+			docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(xmlFile);
+			Node parentNode = doc.getElementsByTagName(parent).item(0);
+			Element childElement = doc.createElement(child);
+			childElement.setAttribute(attribute, value);
+			parentNode.appendChild(childElement);
+			TransformXML(doc);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//add child element with attributes without values and attributes and contents
+	public static void addChildElement(String parent, String child,String attribute,String value,String content) {
+		try {
+			docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(xmlFile);
+			Node parentNode = doc.getElementsByTagName(parent).item(0);
+			Element childElement = doc.createElement(child);
+			childElement.setAttribute(attribute, value);
+			childElement.setTextContent(content);
+			parentNode.appendChild(childElement);
+			TransformXML(doc);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-	protected String getString(String tagName, Element element) {
+	public static String getString(String tagName, Element element) {
 		NodeList list = element.getElementsByTagName(tagName);
 		if (list != null && list.getLength() > 0) {
 			NodeList subList = list.item(0).getChildNodes();
