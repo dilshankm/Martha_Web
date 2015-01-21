@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Martha</title>
+<title>මාතා</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-1.10.2.js"
@@ -38,23 +38,27 @@
 				<div class="col-sm-4">
 					<h4>උක්තය</h4>
 				</div>
-				<div class="col-sm-4">
-					<select class="form-control" id="subject" name="subject">
-						<option id="singular">ඒක වචන</option>
-						<option id="plural">බහු වචන</option>
-						<option id="femine">ස්ත්‍රී ලිංග</option>
-						<option id="masculine">පුරුෂ ලිංග</option>
-						<option id="new">නව යෙදුමක්</option>
-						<option id="preWord">පෙර යෙදුමක්</option>
-						<option id="postWord">පසු යෙදුමක්</option>
-						<option id="conjugation">වරනැගීමක්</option>
-						<option id="irrelavant">අදාල නොවේ</option>
-					</select>
-				</div>
-				<div class="col-sm-4">
-					<div class="form-group">
-						<input type="text" class="form-control" id="subjectNew"
-							name="subjectNew">
+				<div id="subjSep">
+					<div class="col-sm-4">
+						<select class="form-control" id="subject" name="subject">
+							<option id="singular">ඒක වචන</option>
+							<option id="plural">බහු වචන</option>
+							<option id="femine">ස්ත්‍රී ලිංග</option>
+							<option id="masculine">පුරුෂ ලිංග</option>
+							<option id="new">නව යෙදුමක්</option>
+							<option id="preWord">පෙර යෙදුමක්</option>
+							<option id="postWord">පසු යෙදුමක්</option>
+							<option id="conjugation">වරනැගීමක්</option>
+							<option id="irrelavant">අදාල නොවේ</option>
+							<option id="connection">නව සම්බන්දයක්</option>
+							
+						</select>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<input type="text" class="form-control" id="subjectNew"
+								name="subjectNew">
+						</div>
 					</div>
 				</div>
 			</div>

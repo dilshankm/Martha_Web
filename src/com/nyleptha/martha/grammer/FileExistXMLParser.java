@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class XMLParser {
+public class FileExistXMLParser {
 
 	static File xmlFile = new File(
 			"/home/dilshan/office/Martha_Web_V1/src/rules.xml");
@@ -20,20 +20,9 @@ public class XMLParser {
 	static DocumentBuilder docBuilder;
 	static String objPath = "/home/dilshan/office/Martha/src/main/resources/document.ser";
 
-	//create an xml file with root element and without attribute and value
-	public static void createXML(String root) {
-		try {		
-			docBuilder = docFactory.newDocumentBuilder();
-			Document doc= docBuilder.newDocument();
-			Element rootElement = doc.createElement(root);
-			doc.appendChild(rootElement);
-			TransformXML(doc);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
-	public static void existingValidation(File file,String child){
+	
+	public static void existCreateFile(File file,String child){
 		try{
 			docBuilder = docFactory.newDocumentBuilder();
 			Document doc= docBuilder.parse(file);
@@ -79,14 +68,10 @@ public class XMLParser {
    //add child elemnts without attributes
 	public static void addChildElement(String parent, String child,int id) {
 		try {
-			System.out.println(child+" "+id);
 			docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse(xmlFile);
-			Node parentNode =doc.getElementsByTagName(parent).item(id);
-			System.out.println("nodename parent"+parentNode.getNodeName());
-			System.out.println("Child name"+child);
+			Node parentNode = doc.getElementsByTagName(parent).item(id);
 			Element childElement = doc.createElement(child);
-			System.out.println("Child Element"+childElement.getNodeName());
 			parentNode.appendChild(childElement);
 			TransformXML(doc);	
 		} catch (Exception e) {

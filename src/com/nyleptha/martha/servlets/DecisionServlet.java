@@ -1,5 +1,6 @@
 package com.nyleptha.martha.servlets;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.Session;
 
+import com.nyleptha.martha.grammer.ExistingFileXmlParser;
+import com.nyleptha.martha.grammer.NewFileXMLParser;
 import com.nyleptha.martha.grammer.XMLParser;
 
 /**
@@ -17,6 +20,9 @@ import com.nyleptha.martha.grammer.XMLParser;
 @WebServlet("/DecisionServlet")
 public class DecisionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	static File xmlFile = new File(
+			"/home/dilshan/office/Martha_Web_V1/src/rules.xml");
+	public int id;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -24,7 +30,7 @@ public class DecisionServlet extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
-		XMLParser.createXML("rules");
+		id=0;
 		super.init();
 	}
 
@@ -44,7 +50,7 @@ public class DecisionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String sentencetype = (request.getParameter("sentence").trim())
+			String sentenceType = (request.getParameter("sentence").trim())
 					.replaceAll("\\s+", "");
 			String subject = (request.getParameter("subject").trim())
 					.replaceAll("\\s+", "");
@@ -52,22 +58,22 @@ public class DecisionServlet extends HttpServlet {
 					.replaceAll("\\s+", "");
 			String verb = (request.getParameter("verb").trim()).replaceAll(
 					"\\s+", "");
+			System.out.println("Hi"+verb);
 			String verbNew = (request.getParameter("verbNewValue").trim())
 					.replaceAll("\\s+", "");
 			String object = (request.getParameter("object").trim()).replaceAll(
 					"\\s+", "");
 			String objectNew = (request.getParameter("objectNewValue").trim())
 					.replaceAll("\\s+", "");
-			XMLParser.addChildElement("rules", "rule");
-			XMLParser.addChildElement("rule", sentencetype);
-			XMLParser.addChildElement(sentencetype, "subject");
-			XMLParser.addChildElement("subject", subject, subjectNew);
-			XMLParser.addChildElement(sentencetype, "verb");
-			XMLParser.addChildElement("verb", verb,verbNew);
-			XMLParser.addChildElement(sentencetype, "object");
-			XMLParser.addChildElement("object", object);
+			System.out.println(subject);
+			if(xmlFile.exists()){
+				ExistingFileXmlParser.createXML(sentenceType, subject, subjectNew, verb, verbNew, object, "");
+			}else{
+				NewFileXMLParser.createXML(sentenceType, subject, subjectNew, verb, verbNew, object, "");
+			}
+			id++;
 			response.setContentType("text/string");
-			response.getWriter().write(sentencetype);
+			response.getWriter().write(sentenceType);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

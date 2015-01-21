@@ -34,6 +34,7 @@ $(document).ready(function() {
 		else if(subjectId == "conjugation"){
 			$('#subjectNew').show()
 			subjNewValue=$("#subjectNew").value()
+			
 		}
 		else {
 			$('#subjectNew').hide();	
@@ -52,6 +53,7 @@ $(document).ready(function() {
 		}
 		else if(verbId == "conjugation"){
 			$('#verbNew').show()
+			alert($('#verb').children(":selected").attr("id"))
 		}
 		else {
 			$('#verbNew').hide()
@@ -79,12 +81,12 @@ $(document).ready(function() {
 		$.ajax({
 		url : 'DecisionServlet',
 		data : {
-			sentence : sentenceId,
-			subject : subjectId,
+			sentence : $('#sentence').children(":selected").attr("id"),
+			subject : $('#subject').children(":selected").attr("id"),
 			subjectNewValue :$("#subjectNew").val(),
-			verb    : verbId,
+			verb    : $('#verb').children(":selected").attr("id"),
 			verbNewValue:$("#verbNew").val(),
-			object  : objectId,
+			object  : $("#object").children(":selected").attr("id"),
 			objectNewValue:$("#objectNew").val()
 		},
 		success : function(responseText) {
@@ -92,6 +94,6 @@ $(document).ready(function() {
 		}
 	});
 	});
+	
 });
-
 
