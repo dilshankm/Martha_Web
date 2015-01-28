@@ -1,12 +1,17 @@
 package com.nyleptha.martha.grammer;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Properties;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -14,15 +19,26 @@ import org.w3c.dom.NodeList;
 
 public class ExistingFileXmlParser {
 
-	static File xmlFile = new File(
-			"/home/dilshan/office/Martha_Web_V1/src/rules.xml");
+	File xmlFile=null ;
 	static DocumentBuilderFactory docFactory = DocumentBuilderFactory
 			.newInstance();
 	static DocumentBuilder docBuilder;
-	static String objPath = "/home/dilshan/office/Martha/src/main/resources/document.ser";
+	Properties prop = new Properties();
+	InputStream input = null;
 
-	// create an xml file with root element and without attribute and value
-	public static void createXML(String sentence, String subj, String subjVal,
+	public ExistingFileXmlParser(){
+		try{
+			input = new FileInputStream("/home/dilshan/office/Martha_Web_V1/config.properties");
+			prop.load(input);
+			xmlFile=new File(prop.getProperty("rulesFilePath"));
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	// create an xml file
+	public void createXML(String sentence, String subj, String subjVal,
 			String verb, String verbVal, String obj, String objVal) {
 		try {
 			docBuilder = docFactory.newDocumentBuilder();
@@ -61,9 +77,8 @@ public class ExistingFileXmlParser {
 		}
 	}
 
-
 	// transform the xml file
-	public static Document TransformXML(Document doc) {
+	public Document TransformXML(Document doc) {
 		try {
 			TransformerFactory transformerFactory = TransformerFactory
 					.newInstance();
@@ -77,15 +92,5 @@ public class ExistingFileXmlParser {
 		return doc;
 	}
 
-	public static String getString(String tagName, Element element) {
-		NodeList list = element.getElementsByTagName(tagName);
-		if (list != null && list.getLength() > 0) {
-			NodeList subList = list.item(0).getChildNodes();
-			if (subList != null && subList.getLength() > 0) {
-				return subList.item(0).getNodeValue();
-			}
-		}
-		return null;
-	}
 
 }

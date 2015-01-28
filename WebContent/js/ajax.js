@@ -77,6 +77,9 @@ $(document).ready(function() {
 			$('#objectNew').hide()
 		}
 	});
+	$('#submitNew').click(function() {
+		 location.reload();
+	});
 	$('#submit').click(function() {	
 		$.ajax({
 		url : 'DecisionServlet',
@@ -94,6 +97,5 @@ $(document).ready(function() {
 		}
 	});
 	});
-	
 });
 

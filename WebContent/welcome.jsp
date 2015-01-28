@@ -50,8 +50,7 @@
 							<option id="postWord">පසු යෙදුමක්</option>
 							<option id="conjugation">වරනැගීමක්</option>
 							<option id="irrelavant">අදාල නොවේ</option>
-							<option id="connection">නව සම්බන්දයක්</option>
-							
+
 						</select>
 					</div>
 					<div class="col-sm-4">
@@ -109,8 +108,15 @@
 					</div>
 				</div>
 			</div>
-			<button type="button" class="btn btn-info btn-lg" id="submit">ව්‍යාකරණ
-				නීතිය ඇතුලත් කරන්න</button>
+			<div class="row">
+				<div class="col-sm-4">
+					<button type="button" class="btn btn-info btn-lg" id="submit">ව්‍යාකරණ
+						නීතිය ඇතුලත් කරන්න</button>
+				</div>
+				<div class="col-sm-4">
+					<button type="button" class="btn btn-info btn-lg" id="submitNew">නව ව්‍යාකරණ නීතියක් ඇතුලත් කරන්න.</button>
+				</div>
+			</div>
 		</form>
 	</div>
 
@@ -120,7 +126,11 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script type="text/javascript" src='js/bootstrap.min.js'></script>
 	<script type="text/javascript" src='js/ajax.js'></script>
-	<p id="ajaxGetUserServletResponse"></p>
-	<p id="subject"></p>
+	
+    <div class="alert alert-error">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <p id="ajaxGetUserServletResponse"></p>
+    </div>	
+    
 </body>
 </html>

@@ -8,29 +8,30 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.Session;
 
+import org.eclipse.jdt.internal.compiler.ast.IfStatement;
+
+import com.nyleptha.martha.grammer.DuplicateFinder;
 import com.nyleptha.martha.grammer.ExistingFileXmlParser;
 import com.nyleptha.martha.grammer.NewFileXMLParser;
-import com.nyleptha.martha.grammer.XMLParser;
 
 /**
  * Servlet implementation class DecisionServlet
  */
 @WebServlet("/DecisionServlet")
 public class DecisionServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
 	static File xmlFile = new File(
 			"/home/dilshan/office/Martha_Web_V1/src/rules.xml");
-	public int id;
+	boolean status = false;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	
+
 	@Override
 	public void init() throws ServletException {
-		id=0;
 		super.init();
 	}
 
@@ -58,22 +59,43 @@ public class DecisionServlet extends HttpServlet {
 					.replaceAll("\\s+", "");
 			String verb = (request.getParameter("verb").trim()).replaceAll(
 					"\\s+", "");
-			System.out.println("Hi"+verb);
 			String verbNew = (request.getParameter("verbNewValue").trim())
 					.replaceAll("\\s+", "");
 			String object = (request.getParameter("object").trim()).replaceAll(
 					"\\s+", "");
 			String objectNew = (request.getParameter("objectNewValue").trim())
 					.replaceAll("\\s+", "");
-			System.out.println(subject);
-			if(xmlFile.exists()){
-				ExistingFileXmlParser.createXML(sentenceType, subject, subjectNew, verb, verbNew, object, "");
-			}else{
-				NewFileXMLParser.createXML(sentenceType, subject, subjectNew, verb, verbNew, object, "");
+
+			ExistingFileXmlParser exParser = new ExistingFileXmlParser();
+			ExistingFileXmlParser newParser = new ExistingFileXmlParser();
+
+			DuplicateFinder finder = new DuplicateFinder();
+			status = finder.findDuplicates(sentenceType, subject, subjectNew,
+					verb, verbNew, object, objectNew);
+
+			if (status) {
+				System.out.println("Hello");
+				response.setCharacterEncoding("UTF-8");
+				response.setContentType("text/plain");
+				response.getWriter().write(
+						"මෙම ව්‍යාකරණ නීතිය කලින් ඇතුලත් කර ඇත.");
+			} else {
+				if (xmlFile.exists()) {
+					exParser.createXML(sentenceType, subject, subjectNew, verb,
+							verbNew, object, "");
+					response.setCharacterEncoding("UTF-8");
+					response.setContentType("text/plain");
+					response.getWriter()
+							.write("ව්‍යාකරණ නීතිය සාර්ථකව ඇතුලත් කරන ලදී.");
+				} else {
+					newParser.createXML(sentenceType, subject, subjectNew,
+							verb, verbNew, object, "");
+					response.setCharacterEncoding("UTF-8");
+					response.setContentType("text/plain");
+					response.getWriter()
+							.write("ව්‍යාකරණ නීතිය සාර්ථකව ඇතුලත් කරන ලදී.");
+				}
 			}
-			id++;
-			response.setContentType("text/string");
-			response.getWriter().write(sentenceType);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
